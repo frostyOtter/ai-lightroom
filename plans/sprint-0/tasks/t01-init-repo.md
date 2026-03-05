@@ -191,9 +191,9 @@ cd ai-lightroom
 2. Set up backend
 ```bash
 cd api
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-pip install -r requirements.txt
+uv venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+uv pip install -r requirements.txt
 ```
 
 3. Set up frontend

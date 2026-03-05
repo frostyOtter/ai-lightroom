@@ -122,7 +122,7 @@ docker-compose*.yml text eol=lf
 **.pre-commit-config.yaml**
 ```yaml
 # Pre-commit hooks configuration
-# Install: pip install pre-commit && pre-commit install
+# Install: uv pip install pre-commit && pre-commit install
 
 repos:
   # Python hooks
@@ -374,7 +374,7 @@ Bypass if needed: `git commit --no-verify` (use sparingly)
 
 ```bash
 # Step 1: Install pre-commit
-pip install pre-commit
+uv pip install pre-commit
 
 # Step 2: Create configuration files
 # Create .pre-commit-config.yaml

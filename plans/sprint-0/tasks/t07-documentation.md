@@ -132,9 +132,9 @@ cd ai-lightroom
 
 # Setup backend
 cd api
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-pip install -r requirements.txt
+uv venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
+uv pip install -r requirements.txt
 cp .env.example .env
 # Edit .env and add your Gemini API key
 uvicorn app.main:app --reload --port 8000
@@ -192,17 +192,17 @@ FastAPI backend for AI-powered image color adjustment.
 ### Prerequisites
 
 - Python 3.11+
-- pip
+- uv
 
 ### Installation
 
 ```bash
 # Create virtual environment
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
+uv venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
 
 # Install dependencies
-pip install -r requirements.txt
+uv pip install -r requirements.txt
 
 # Configure environment
 cp .env.example .env
@@ -498,7 +498,7 @@ nvm use 18
 **Solution**: 
 1. Ensure virtual environment is activated
 2. Run from `api/` directory
-3. Reinstall dependencies: `pip install -r requirements.txt`
+3. Reinstall dependencies: `uv pip install -r requirements.txt`
 
 #### Port 8000 in use
 **Problem**: `Address already in use`

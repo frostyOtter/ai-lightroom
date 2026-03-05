@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: ai-lightroom-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./api:/app
+      - /app/.venv
+    environment:
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - DEBUG=true
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - CORS_ORIGINS=http://localhost:5173,http://localhost:3000
+    env_file:
+      - ./api/.env
+    networks:
+      - ai-lightroom-network
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health/')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  frontend:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    container_name: ai-lightroom-frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./web:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_URL=http://localhost:8000
+      - VITE_API_TIMEOUT=30000
+    env_file:
+      - ./web/.env
+    networks:
+      - ai-lightroom-network
+    depends_on:
+      backend:
+        condition: service_healthy
+
+networks:
+  ai-lightroom-network:
+    driver: bridge

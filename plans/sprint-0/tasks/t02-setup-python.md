@@ -35,7 +35,7 @@ Set up a complete Python development environment for the FastAPI backend with al
 ### Prerequisites
 - [x] t01-init-repo (repository structure exists)
 - [x] Python 3.11+ installed locally
-- [x] pip (Python package manager) available
+- [x] uv (Python package manager) available
 
 ### Blocking
 - [ ] t04-docker-config (depends on backend setup)
@@ -65,7 +65,7 @@ Set up a complete Python development environment for the FastAPI backend with al
 
 ### Edge Cases to Handle
 - Python version not 3.11+
-- pip install fails (network issues)
+- uv pip install fails (network issues)
 - Virtual environment activation issues
 - Port 8000 already in use
 
@@ -300,19 +300,16 @@ def test_health_check():
 cd api
 
 # Step 2: Create virtual environment
-python3 -m venv venv
+uv venv
 
 # Step 3: Activate virtual environment
 # On macOS/Linux:
-source venv/bin/activate
+source .venv/bin/activate
 # On Windows:
-venv\Scripts\activate
+.venv\Scripts\activate
 
-# Step 4: Upgrade pip
-pip install --upgrade pip
-
-# Step 5: Install dependencies
-pip install -r requirements.txt
+# Step 4: Install dependencies
+uv pip install -r requirements.txt
 
 # Step 6: Create application structure
 mkdir -p app/{routes,services,schemas,middleware}
@@ -430,8 +427,8 @@ uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 - **Solution**: Use different port with `--port 8001` or kill process using port
 - **Prevention**: Document port usage, use environment variables
 
-**Issue 3**: pip install fails due to network issues
-- **Solution**: Use pip with `--default-timeout=1000` or try again
+**Issue 3**: uv pip install fails due to network issues
+- **Solution**: Use uv with `--index-url` to specify a different package index or try again
 - **Prevention**: Use requirements.txt with version pinning
 
 **Issue 4**: Virtual environment not activating
