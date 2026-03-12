@@ -1,8 +1,8 @@
 import os
-from pydantic_settings import BaseSettings
-from typing import List
-from functools import lru_cache
 import sys
+from functools import lru_cache
+
+from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
@@ -11,8 +11,8 @@ class Settings(BaseSettings):
     DEBUG: bool = True
 
     GOOGLE_API_KEY: str = ""
-    GOOGLE_MODEL: str = "gemini-1.5-pro-vision"
-    GOOGLE_MODEL_TEXT: str = "gemini-1.5-pro"
+    GOOGLE_MODEL: str = "gemini-3-flash-preview"
+    GOOGLE_MODEL_TEXT: str = "gemini-3-flash-preview"
 
     CORS_ORIGINS: str = "http://localhost:5173,http://localhost:3000"
 
@@ -25,11 +25,11 @@ class Settings(BaseSettings):
     RATE_LIMIT_PER_MINUTE: int = 60
 
     @property
-    def cors_origins_list(self) -> List[str]:
+    def cors_origins_list(self) -> list[str]:
         return [origin.strip() for origin in self.CORS_ORIGINS.split(",")]
 
     @property
-    def allowed_extensions_list(self) -> List[str]:
+    def allowed_extensions_list(self) -> list[str]:
         return [ext.strip().lower() for ext in self.ALLOWED_EXTENSIONS.split(",")]
 
     def validate_required(self) -> None:
@@ -58,7 +58,7 @@ class Settings(BaseSettings):
         case_sensitive = True
 
 
-@lru_cache()
+@lru_cache
 def get_settings() -> Settings:
     settings = Settings()
     settings.validate_required()

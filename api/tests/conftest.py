@@ -1,16 +1,16 @@
-import os
 import pytest
 
-
-# Set test environment variables before any test runs
-os.environ["GOOGLE_API_KEY"] = "test-api-key-for-testing-12345"
-os.environ["DEBUG"] = "true"
+from app.config import get_settings
 
 
 @pytest.fixture(autouse=True)
 def clear_settings_cache():
-    """Clear settings cache before each test to ensure fresh environment."""
-    from app.config import get_settings
+    """Clear the get_settings() lru_cache before every test.
 
+    This is critical for monkeypatch to work correctly. Without clearing
+    the cache, get_settings() returns the same cached instance regardless
+    of any environment variable overrides applied by monkeypatch.
+    """
     get_settings.cache_clear()
     yield
+    get_settings.cache_clear()
